@@ -60,3 +60,29 @@ console.log(solution(["abcde", "edcba", "cdeba", "debac", "acbed"])); //["a", "c
 //   return pre + curr;
 // }, 0);
 // console.log(result);
+
+function solution6(str) {
+  let answer = "YES";
+  let left = 0,
+    right = str.length - 1,
+    cnt = 0;
+  str = str.split(""); // 문자열(String) -> 배열(Array) 변환
+  while (left < right) {
+    if (str[left] === str[right]) {
+      left++;
+      right--;
+    } else {
+      if (cnt > 1) {
+        answer = "NO";
+        break;
+      }
+      cnt++;
+      left++;
+      left--;
+    }
+  }
+  return answer;
+}
+console.log(solution6("abcbdcba"));
+//console.log(solution6("abcabbakcba"));
+//console.log(solution6("abcacbakcba"));

@@ -258,7 +258,8 @@ function solution7(s, t) {
   let sH = new Map();
   for (let x of t) {
     console.log(x);
-    sH.set(x, (sH.get(x) || 0) - 1); //counting 하는거 -1 :
+    sH.set(x, (sH.get(x) || 0) - 1); //counting 하는거 -1
+    console.log(sH);
   }
   let len = t.length - 1;
   for (let i = 0; i < len; i++) {
