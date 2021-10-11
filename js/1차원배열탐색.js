@@ -2,7 +2,7 @@
 // Array Algorithm
 
 /*
-//즉,주어진 배열의 길이에서 -1을 하라는 문제?
+즉,주어진 배열의 길이에서 -1을 하라는 문제?
 function solution(nums, m) {
   let i = 0;
   let arry1 = nums.slice(0, nums.length - 1);
