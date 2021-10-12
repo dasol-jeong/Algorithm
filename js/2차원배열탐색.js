@@ -1,6 +1,9 @@
+// 2021-10-08
+// 2차원 배열탐색
+
 // 문제1 - 격자판 최대합
 function solution1(arr) {
-  let answer = Number.MIN_SAFE_INTEGER;
+  let answer = Number.MIN_SAFE_INTEGER; //안전한 최소 정수값 (-(2^53-1))
   let n = arr.length;
   let sum1 = (sum2 = 0);
   for (let i = 0; i < n; i++) {
@@ -12,10 +15,10 @@ function solution1(arr) {
     }
     answer = Math.max(answer, sum1, sum2);
   }
-  sum1 = sum2 = 0;
+  sum1 = sum2 = 0; // 두 대각선의 값 구하기 위해 0으로 다시 셋팅
   for (let i = 0; i < n; i++) {
-    sum1 += arr[i][i];
-    sum2 += arr[i][n - i - 1];
+    sum1 += arr[i][i]; // ↘대각선 합 구하기
+    sum2 += arr[i][n - i - 1]; // ↙대각선 합 구하기 (i가 0부터 시작하니 -1 해줘야함)
   }
   answer = Math.max(answer, sum1, sum2);
   return answer;
@@ -31,7 +34,7 @@ let arr = [
 
 console.log(solution1(arr));
 
-// 문제2 - 봉우리
+// 문제2 - 봉우리(자신의 상하좌우보다 큰 숫자면 봉우리)
 
 function solution2(arr) {
   let answer = 0;
@@ -41,25 +44,25 @@ function solution2(arr) {
   for (let i = 0; i < n; i++) {
     // i,j지점이 기준이되서
     for (let j = 0; j < n; j++) {
-      let flag = 1;
+      let flag = 1; //봉우리임
       for (let k = 0; k < 4; k++) {
         //4방향을 보는 for문
         let nx = i + dx[k];
         let ny = j + dy[k];
         console.log(nx, ny);
         if (
+          //-값 있으면 경계선임
           nx >= 0 &&
           nx < n &&
           ny >= 0 &&
           ny < n &&
-          arr[nx][ny] >= arr[i][j]
+          arr[nx][ny] >= arr[i][j] // 지금 위치의 값보다 상하좌우값이 크거나 같으면
         ) {
-          //경계선 넣어주는거야
           flag = 0; //봉우리가 아니다
           break;
         }
       }
-      if (flag) answer++;
+      if (flag) answer++; // flag가 1이면 수행, 지금 위치의 값이 상하좌우보다 크니, 하나 counting
     }
   }
 
@@ -75,22 +78,21 @@ let arr = [
 ];
 console.log(solution2(arr));
 
-function solution(money, cost) {
-  let answer = 0,
-    sum = 0,
-    left = 0;
-  for (let right = 0; right < cost.length; right++) {
-    sum += cost[right];
-    while (sum > money) {
-      sum -= cost[left++];
-      console.log(sum);
-    }
-    answer = Math.max(answer, right - left + 1);
-  }
+// 문제3 - 임시반장 정하기
+function solution3(arr) {
+  let answer;
+
   return answer;
 }
-
-console.log(solution(420, [0, 900, 0, 200, 150, 0, 30, 50]));
+console.log(
+  solution3([
+    [2, 3, 1, 7, 3],
+    [4, 1, 9, 6, 8],
+    [5, 5, 2, 4, 4],
+    [6, 5, 2, 6, 7],
+    [8, 4, 2, 2, 2]
+  ])
+);
 
 //인덱스로 찾기
 // 문제4 - 빙고

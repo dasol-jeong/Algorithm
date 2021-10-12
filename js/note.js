@@ -86,3 +86,47 @@ function solution6(str) {
 console.log(solution6("abcbdcba"));
 //console.log(solution6("abcabbakcba"));
 //console.log(solution6("abcacbakcba"));
+
+// 프로그래머스 - 엘리베이터 문제
+function solution(money, cost) {
+  let answer = 0,
+    sum = 0,
+    left = 0;
+  for (let right = 0; right < cost.length; right++) {
+    sum += cost[right];
+    while (sum > money) {
+      sum -= cost[left++];
+      console.log(sum);
+    }
+    answer = Math.max(answer, right - left + 1);
+  }
+  return answer;
+}
+
+console.log(solution(420, [0, 900, 0, 200, 150, 0, 30, 50]));
+
+function sol(nums, k) {
+  let answer = 0;
+  (left = 0), (cnt = 0);
+  for (let right = 0; right < nums.length; right++) {
+    while (cnt > k) {
+      if (nums[right] % 2 === 1) {
+        cnt++;
+      }
+      nums[left++];
+    }
+    console.log(cnt);
+  }
+  return answer;
+}
+console.log(sol([1, 2, 1, 1, 2], 2));
+
+
+function counting
+if(arr[right]%2===1) odd++;
+while(odd>k){
+  if(arr[left]%2===1) odd--;
+  left++;
+}
+sum+=right-left+1;
+return counting(k)-counting(k-1);
