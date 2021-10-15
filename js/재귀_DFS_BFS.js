@@ -183,14 +183,15 @@ function solution(nums, m) {
 console.log(solution([3, 6, 9], 2));
 
 // 문제8
-function solution(n, m) {
+function solution(n, r) {
   let answer = [];
-  let arr = Array.from(Array(35), () => Array(35).fill(0));
+  let arr = Array.from(Array(35), () => Array(35).fill(0)); //참여한 경우 1, 참여안한경우 0으로 표시하기 위해 배열생성하여 0으로 초기화
   function DFS(n, r) {
     if (arr[n][r] > 0) return arr[n][r];
     if (n === r || r === 0) return 1;
-    else return (dy[n][r] = DFS(n - 1, r - 1));
+    else return (arr[n][r] = DFS(n - 1, r - 1) + DFS(n - 1, r)); 
   }
+  answer = DFS(n, r);
   return answer;
 }
 console.log(solution(5, 3));
@@ -255,20 +256,230 @@ function solution() {
 }
 console.log(solution());
 
-// 바둑이
-function solution(nums, c) {
-  let answer;
-  let sum = 0;
 
-  function DFS(l, c) {
-    if (sum > c) return;
-    if (l === n) answer += sum;
-    else {
-      DFS(l + 1, sum + nums[l]);
-      DFS(l + 1, sum);
-    }
+
+// 조합의 경우수
+function solution(n, m) {
+  let answer;
+  let arr=Array.from(())
+
+  function DFS(n,m) {
+    if(arr)
   }
-  DFS(0, 0);
   return answer;
 }
-console.log(solution([81, 58, 42, 33, 61], 259));
+console.log(solution(5, 3));
+
+
+
+
+// 문제12 - 송아지찾기(기출문제)
+function solution(s,e){ //s:시작지점 e:송아지위치(끝지점)
+  let answer=[];
+  function BFS(){
+    let ch=Array(10001).fill(0); //check하는 배열! 한번 들렸던건 다시 안들리기위해, time
+    let queue=[];
+    queue.push(s);
+    ch[s]=1;
+    let l=0; // 트리의 Level
+    while(queue.length){
+      let len=queue.length;
+      for(let i=0;i<len;i++){ //l이 1일때는 3개가 다나오는것.
+        let x=queue.shift();
+        //만약 여기서 return 하면 if(nx===e) return l; 여긴 레벨!이라 
+        for(let nx of [x-1,x+1,x+5]){
+          if(nx===e) return l+1; //자식에서 발견된거니까 l+1
+          if(nx>0 &&nx<10000 &&ch[nx]===0){ //ch[nx]!==0이면 한번 들렸던거
+            ch[nx]=1;
+            queue.push(nx);
+          }
+        }
+      }
+      l++;
+    }
+  }
+  answer=BFS();
+  return answer;
+}
+console.log(solution(5,14));
+
+
+
+
+// 문제9 -  수열 추측하기
+function solution(n, r) {
+  let answer = [];
+  let arr = Array.from(Array(35), () => Array(35).fill(0)); //참여한 경우 1, 참여안한경우 0으로 표시하기 위해 배열생성하여 0으로 초기화
+  function DFS(n, r) {
+    if (arr[n][r] > 0) return arr[n][r];
+    if (n === r || r === 0) return 1;
+    else return (arr[n][r] = DFS(n - 1, r - 1) + DFS(n - 1, r)); 
+  }
+  answer = DFS(n, r);
+  return answer;
+}
+console.log(solution(5, 3));
+
+
+function solution(n,m){
+  let answer=[];
+  let n=nums.length;
+  let dy=Array.from()
+  let ch=Array(n).fill(0);
+  
+  function DFS(l,sum){
+    if(flag) return; //찾았으니 그 다음 재귀에서 나오는것들은 flag 1로 만들어서 종료시킴
+    if(l===n){
+      if(sum===m) answer=p.slice(); //이부분....건드려라........ string 처리
+      flag=1;
+    }
+    else{
+      for(let i=1;i<=n;i++){
+        if(ch[i]===0){
+          ch[i]=1;
+          //p[l]=i; 이거 사용해도돼
+          p.push(i);
+          DFS(l+1,sum+(b[l]*p[l]])); //p
+          ch[i]=0;
+          p.pop();
+        }
+      }
+    }
+    for(let i=0;i<n;i++){
+      b.push(combi(n-1,i));
+    }
+  }
+}
+
+
+// 문제13 - 타일 점프
+
+function solution(num) {
+  let answer = 0;
+  let n=num.length;
+  function BFS() {
+    let ch = Array.from({length:n},()=>0);
+    let queue = [];
+    queue.push(0);
+    ch[0]=1;
+    let l=0;
+    while(queue.length){
+      let len=queue.length;
+      for(let i=0;i<len;i++){ //level을 도는걸
+        let x=queue.shift();
+        for(let j=1;j<=num[x];j++){//level의 자식
+          let nx=x+j; //nx는 인덱스
+          if(nx===n-1) return l+1; //nx가 n-1이면 도착지점에 온거
+          if(nx>0&&nx<n&&ch[nx]===0){
+            ch[nx]=1;
+            queue.push(nx);
+          }
+
+        }
+      }
+      l++;
+    }
+  }
+  answer=BFS();
+  if(answer===undefined) answer=-1;
+  return answer;
+}
+console.log(solution([2, 2, 0, 2, 1, 1]));
+console.log(solution([1, 0, 1, 1, 3, 1, 2, 1]));
+
+
+dx=[-1,0,1,0];
+dy=[0,1,0,-1];
+시계방향
+board[x][y]=1; //출발점 체크하세요!!
+
+// 경로탐색(DFS) - 최상의 경우의 수를 찾아라 DFS임
+// 2차원 배열많이 사용해...............행과열.........ㅅㅄㅄㅄㅄㅄㅄㅄㅄㅄㅄㅄㅄㅄㅄㅄㅄㅄㅄㅄㅄㅂㅄ
+
+//back할때 check=0해줘야해
+//인접행렬의 단점 : node가 많아졌을때, 만개 천개 정도 되면... 메모리가 아작나 그리고 v노드가 10만이면 10만번을 돌아야돼
+//그래프에 node개수많아지면 인접그래프 사용하기
+
+function solution(e,nums){
+  let answer=0;
+  let path=[];
+  let graph=Array.from(Array(n+1),()=>Array(n+1).fill(0));
+  let ch=Array.from({length:n+1},()=>0);
+  for(let [a,b] of edges){
+    graph[a][b]=1;
+  }
+  function DFS(v){
+    if(v===n){
+      answer++;
+      console.log(path);
+    }
+    else{
+      for
+    }
+  }
+
+}
+let ch=Array.from({})
+
+
+/* n+3배열로 
+그래프화시키고 1번사람...부터 돌려
+for문이 1부터 7까지도는데.....
+ch[i]===0이면 cnt++하고
+ch[i]===1이면....DFS돌아
+*/
+
+function solution(n,edges){
+  let graph=Array.from(Array(n+1),()=>Array());
+  let ch=Array.from({length:n+1},()=>0);
+  let answer=0;
+  for(let [a,b] of edges){
+    graph[a].push(b);
+    graph[b].push(a);
+  }
+  function DFS(v){
+    for(let nv of graph[v]){
+      if(ch[nv]===0){
+        ch[nv]=1;
+        DFS(nv);
+      }
+    }
+  }
+  for(let i=1;i<=n;i++){
+    if(ch[i]===0){
+      answer++;
+      ch[i]=1;
+      DFS(i);
+    }
+  }
+  return answer;
+
+}
+console.log(solution(7, [[1, 2], [2, 3], [1, 4], [1, 5]]));
+
+
+
+//1만나면 dfs! 만나면 그 안에 있는 수 0으로 바꾸고! dfs를 몇번 호출했냐가 답?
+// 섬나라 아일랜드
+function solution(board){
+  let answer=0;
+  let n=board.length;
+  let dx=[-1,-1,0,1,1,1,0,-1];
+  let dy=[0,1]
+}
+
+
+/*제곱근까지..돌려서....:소수.......
+for(let i=0;i<arr.length;i++){
+  let check = true;
+  for(let j=2;j*j<=arr[i];j++){
+    if(arr[i]%j===0){
+      check=false;
+      break;
+    }
+  }
+  if(check){
+    count++;
+  }
+}
+*/
