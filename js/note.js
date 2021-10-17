@@ -130,3 +130,140 @@ while(odd>k){
 }
 sum+=right-left+1;
 return counting(k)-counting(k-1);
+
+
+function solution(n){
+  let answer=0,temp=[];
+
+  function DFS(n){
+    if(n===0) return;
+    else{
+      DFS(parseInt(n/2));
+      temp.push(n%2);
+    }
+  }
+  DFS(n);
+  for(let i=0;i<temp.length;i++){
+    answer=answer*10+temp[i];
+  }
+  return answer;
+}
+console.log(solution(11));
+
+
+
+function solution(n){
+  let answer;
+  let dy=Array.from(Array(n))
+}
+
+console.log(solution([2, 2, 0, 2, 1, 1]));
+
+function solution(num){
+  let anwer=0;
+  let n=num.length;
+  function BFS(){
+    let ch=Array.from({length:n},()=>0);
+    let queue=[];
+    queue.push(0);
+    ch[0]=1;
+    let l=0;
+    while(queue.length){
+      let len=queue.length;
+      for(let i=0;i<len;i++){
+        let x=queue.shift();
+        for(let j=1;j<=num[x];j++){
+          let nx=x+j;
+          if(nx===n-1) return l+1;
+          if(nx>0&&nx<n&&ch[nx]===0){
+            ch[nx]=1;
+            queue.push(nx);
+          }
+        }
+      }
+      l++;
+    }
+  }
+  answer=BFS();
+  if(answer===undefined) answer=-1;
+  return answer;
+}
+console.log(solution([2,2,0,2,1,1]))
+
+
+function solution(board){
+  let answer;
+  let n=board.length;
+  let dis=Araay.from(Array(7),()=>Array(7).fill(0));
+  let dx=[-1,0,1,0];
+  let dy=[0,1,0,-1];
+  function BFS(x,y){
+    let queue=[];
+    queue.push([x,y]);
+    board[x][y]=1;
+    while(queue.length){
+      let curr=queue.shift();
+      for(let j=0;j<4;j++){
+        let nx=curr[0]
+      }
+    }
+  }
+
+}
+console.log(solution());
+
+
+
+function solution2(nums, m) {
+  let answer = 0;
+  let left = 0,
+    right = nums.length - 1; // left는 왼쪽에서부터 right는 오른쪽에서부터 배열을 안쪽으로 좁혀오기 위해 탐색
+  nums.sort((a, b) => b - a); // 배열을 내림차순으로 정렬
+  while (left <= right) {
+    // left > right되는 순간은 배열을 다 탐색한거니, while문 종료
+    if (nums[left] + nums[right] <= m) {
+      // sort되어있으니까 가장 몸무게 많이 나가는 사람과 가장 적게 나가는 사람의 합이 m값 이하이면 counting!
+      answer++;
+      left++; // 다음 경우를 찾기 위해 left는 +1
+      right--; // right는 -1
+    } else {
+      //조건이 2명이하 이니까 nums[left], 즉 여기선 nums[0] 값으로만 원하는 값을 찾을 수 있음
+      answer++; // 한개 counting!
+      left++;
+    }
+  }
+  return answer;
+}
+console.log(solution2([90, 50, 70, 100, 60], 140));
+
+function solution(nums, m) {
+  let answer = 0;
+  let left = 0,
+    right = nums.length - 1; // left는 왼쪽에서부터 right는 오른쪽에서부터 배열을 안쪽으로 좁혀오기 위해 탐색
+  nums.sort((a, b) => b - a); // 배열을 내림차순으로 정렬
+  console.log(nums);
+  while (left <= right) {
+    // left > right되는 순간은 배열을 다 탐색한거니, while문 종료
+    if (nums[left] + nums[right] <= m) {
+      // sort되어있으니까 가장 몸무게 많이 나가는 사람과 가장 적게 나가는 사람의 합이 m값 이하이면 counting!
+      answer++;
+      left++; // 다음 경우를 찾기 위해 left는 +1
+      right--; // right는 -1
+    } else {
+      //조건이 2명이하 이니까 nums[left], 즉 여기선 nums[0] 값으로만 원하는 값을 찾을 수 있음
+      answer++; // 한개 counting!
+      left++;  
+    }
+  }
+  return answer;
+}
+console.log(solution([90, 50, 70, 70, 100, 50], 140));
+function solution(n,m){
+  let answer;
+  let temp=Array.from({Array(n)});
+  let ch=Array.from({length:n},()=>0);
+
+  function DFS(l,)
+  return answer;
+}
+console.log(solution(3,2));
