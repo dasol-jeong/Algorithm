@@ -121,7 +121,7 @@ function sol(nums, k) {
 }
 console.log(sol([1, 2, 1, 1, 2], 2));
 
-
+/*
 function counting
 if(arr[right]%2===1) odd++;
 while(odd>k){
@@ -130,7 +130,7 @@ while(odd>k){
 }
 sum+=right-left+1;
 return counting(k)-counting(k-1);
-
+*/
 
 function solution(n){
   let answer=0,temp=[];
@@ -267,3 +267,55 @@ function solution(n,m){
   return answer;
 }
 console.log(solution(3,2));
+
+
+
+// 문자열
+function solution(s){
+  let answer=0;
+  let temp=[];
+ 
+  for(let i=0;i<s.length-2;i++){
+    temp.push(s.substring(i,i+3));
+  }
+  for(let i=0;i<temp.length;i++){
+    let sH=new Map();
+    for(let x of temp[i]){
+      sH.set(x,(sH.get(x)||0)+1);
+    }
+    if(sH.size===3) answer++;
+  }
+  console.log(temp);
+  return answer;
+}
+console.log(solution("xyzzaz"));
+
+
+
+function solution(m,nums){
+  let answer;
+  let left=0,right=Math.max(...nums);
+
+  function count(len){
+    let sum=0;
+    for(let x of nums){
+      if(x>len){
+        sum+=x-len;
+      }
+    }
+    return sum;
+  }
+
+  while(left<=right){
+    let mid=parseInt((left+right)/2);
+    if(count(mid)>=m){
+      answer=mid;
+      left=mid+1;
+    }
+    else right=mid-1;
+
+  }
+  return answer;
+}
+console.log(solution(7,[20, 15, 10, 17]));
+console.log(solution(20,[4,42,40,26,46]));

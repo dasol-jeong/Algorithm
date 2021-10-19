@@ -504,3 +504,163 @@ function solution(n, edges) {
   return answer;
 }
 console.log(solution(7, [[1, 2], [2, 3], [1, 4], [1, 5]]));
+
+// 최대 선호 음식(DFS) - 다시해보기
+// k개 씀 최대라곤 되어있지만 4combi3
+// 어떤 집합에 부분집합으로 자기가 속하면 자기 자신이 나옴 -> 이진수화  이진 &연산!
+// 이렇게 하면서 학생이 이 음식을 먹을 수 있는지 계속 알아봐 최대값을 answer에 넣고
+function solution(nums, d, k) {
+  let answer;
+  let n = nums.length;
+  let pow = Array(d + 1).fill(0);
+  let st = Array(n).fill(0);
+  pow[1] = 1;
+  for (let i = 2; i <= d; i++) {
+    pow[i] = pow[i - 1] * 2;
+  }
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < nums[i].length; j++) {
+      st[i] += pow[nums[i][j]];
+    }
+  }
+  function DFS(l, s, bit) {
+    if (l === k) {
+      let cnt = 0;
+      for (let j = 0; j < n; j++) {
+        if ((bit & st[j]) === st[j]) cnt++;
+      }
+      answer = Math.max(answer, cnt);
+    } else {
+      for (let i = s; i <= d; i++) {
+        DFS(l + 1, i + 1, bit + pow[i]);
+      }
+    }
+  }
+  DFS(0, 1, 0);
+  return answer;
+}
+console.log(
+  solution([[1], [2, 3], [3], [1, 2], [], [2, 1], [2, 3, 4], [3, 4]], 4, 3)
+);
+
+//BFS...출발지점이...여러개일수있어...
+// 문제7 - 토마토
+
+function solution(board) {
+  let answer = 0;
+  let n = boadr.length;
+  let m = board[0].length;
+  let ch = Array.from(Array(n), () => Array(m).fill(0));
+  let queue = [];
+  let dx = [-1, 0, 1, 0];
+  let dy = [0, 1, 0, -1];
+}
+
+// 문제8 - 스도쿠
+/*
+ 빈곳(0값인곳들)을 좌표로 배열에 저장해둬야해
+ 스도쿠판에 있는 값들을 행,열,그룹(스도쿠는 행과 열뿐만아니라 3*3도 1~9까지 들어있어야하니까) 배열에 그 수가 있는 체크
+*/
+function group(x, y) {
+  //x행 y열
+  return x / 3 * 3 + y / 3;
+}
+//그룹번호 리턴되면 그룹배열로 가서 체크....
+
+function solution(board) {
+  let answer = 0;
+  let p = Array.from(Array(2), () => Array(81).fill(0));
+  let row = Array.from(Array(10), () => Array(10).fill(0));
+  let col = Array.from(Array(10), () => Array(10).fill(0));
+  let group = Array.from(Array(10), () => Array(10).fill(0));
+  let cnt = 0;
+  for (let i = 0; i < 9; i++) {
+    for (let j = 0; j < 9; j++) {
+      if (board[i][j] === 0) {
+        p[0][cnt] = i;
+        p[1][cnt++] = j;
+      } else {
+        function solution(n, r) {
+          let answer = [];
+          let dy = Array.from(Array(35), () => Array(35).fill(0));
+
+          function DFS(n, r) {
+            if (dy[n][r] > 0) return dy[n][r];
+            if (n === r || r === 0) return 1;
+            else return (dy[n][r] = DFS(n - 1, r - 1) + DFS(n - 1, r));
+          }
+          answer = DFS(n, r);
+          return answer;
+        }
+        row[i][board[i][j]] = 1;
+        col[j][board[i][j]] = 1;
+        group[find(i, j)][board[i][j]] = 1;
+      }
+    }
+  }
+  let flag = false;
+  DFS(0);
+  function find(x, y) {
+    return parseInt(x / 3) * 3 + parseInt(y / 3);
+  }
+  function DFS(l) {
+    if (flag) return;
+    if (l === cnt) {
+      answer = board.map(v => v.slice());
+      flag = true;
+    } else {
+      let xx = p[0][l];
+      let yy = p[1][l];
+      let gg = find(xx, yy);
+      for (let i = 1; i <= 9; i++) {
+        if (row[xx][i] === 0 && col[yy][i] === 0 && group[gg][i] === 0) {
+          row[xx][i] = col[yy][i] = group[gg][i] = 1;
+          board[xx][yy] = i;
+          DFS(l + 1);
+          board[xx][yy] = 0;
+          row[xx][i] = col[yy][i] = group[gg][i] = 0;
+        }
+      }
+    }
+  }
+  return answer;
+}
+let b = [
+  [0, 2, 3, 0, 5, 0, 7, 8, 9],
+  [0, 5, 6, 0, 8, 9, 1, 0, 3],
+  [0, 8, 9, 1, 0, 3, 0, 5, 6],
+  [0, 1, 0, 0, 6, 0, 8, 9, 0],
+  [3, 0, 5, 0, 9, 7, 0, 1, 4],
+  [0, 9, 7, 0, 1, 0, 0, 6, 5],
+  [5, 3, 0, 6, 0, 2, 9, 7, 8],
+  [6, 0, 2, 9, 0, 8, 5, 3, 1],
+  [9, 0, 8, 0, 3, 0, 6, 0, 2]
+];
+console.log(solution(b));
+
+function solution(nums, k) {
+  //nums : 랜선의 길이들이 담긴 배열, k : 랜선의 개수
+  let answer;
+  function count(len) {
+    let cnt = 0; //랜선을 자르는 횟수를 담을 변수
+    for (let x of nums) {
+      //nums배열에 들어있는 랜선의 길이 하나하나를 x에 담음
+      cnt += Math.floor(x / len); // len:자를려는 길이, x라는 랜선을 len으로 나눈 몫이 그 단위로 나눠진 랜선의 개수이다.
+    }
+    return cnt; // nums배열에 있는 랜선의 길이를 다 len이라는 길이로 나눠 나온 랜선의 개수를 return
+  }
+  let left = 1; // left는 1로 선언. 랜선의 길이가 0일 순 없으니까..(근데 0으로 해줘도 상관은 x)
+  let right = Math.max(...nums); // nums 배열 중 가장 큰수를 right로 해줌, 배열에 가장 작은 수로 하면 그것보다 큰수가 들어오게되면 반례가 생김.
+  // left가 right보다 커지면 while문 종료(이분검색은 left,right로 배열의 범위를 정하고 mid를 구해 배열의 반토막씩 줄여나가면서 구하는 알고리즘이라 left가 right를 넘어가면 끝임)
+  while (left <= right) {
+    let mid = parseInt((left + right) / 2); // 배열의 양쪽 끝지점을 더해 나누기 2한 몫이 그 배열의 중앙값임
+    if (count(mid) >= k) {
+      // 만약, 현재 정한 자를려는 단위로 랜선들을 잘랐을때 나온 랜선의 개수가 k보다 크거나 같으면 문제의 조건에 충족한거임
+      answer = mid; // 그래서 자를려는 길이를 answer에 담아두고 계속 최적의 길이를 찾기
+      left = mid + 1; // 위의 자를려는 길이가 충족하니 길이를 더 늘려보기 위해 left의 위치를 현 mid+1으로 재위치시킴.
+    } else right = mid - 1; // 현재 정한 자를려는 단위가 너무 커 랜선의 개수가 조건보단 적은상태. 자를려는 단위를 줄이기위해, right를 mid-1로 재위치시킴.
+  }
+  return answer;
+}
+console.log(solution([802, 743, 457, 539], 11));
+//11개 이상이면 일단 답으로 해놓고 길이를 늘려서 되면 계속 답을 교체! 더 좋은 답을 찾기 위해 계속 함.
