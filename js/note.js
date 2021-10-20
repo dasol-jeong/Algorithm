@@ -319,3 +319,13 @@ function solution(m,nums){
 }
 console.log(solution(7,[20, 15, 10, 17]));
 console.log(solution(20,[4,42,40,26,46]));
+
+// for문 3개 사용 이중 for문
+function solution(nums){
+  let answer;
+  let n=nums.length;
+  let dy=Array(n+1).fill(0);
+  return answer;
+
+}
+console.log(solution([1,5,2,1,4,3,4,5,2,1]));
