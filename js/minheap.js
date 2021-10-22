@@ -34,7 +34,7 @@ class minHeap {
     while (pos <= parseInt(len / 2)) {
       child = pos * 2; //왼쪽자식
       //child<len 조건은 마지막노드가 왼쪽에만 있을 수 있으니까!! 왼쪽에만 있으면 오른쪽은 체크할 필요없잖아!
-      if (child < len && this.heap[child][1] < this.heap[child + 1][1]) child++;
+      if (child < len && this.heap[child][1] > this.heap[child + 1][1]) child++;
       if (tmp >= this.heap[child][1]) break; //tmp가 자식보다 크거나 같으면 while문 멈춰
       this.heap[pos] = this.heap[child]; //자식이 부모위치로 들어가는것
       pos = child; //그리고 pos의 값은 자식값이 됨. 즉 자식값과 부모값이 서로 바뀌는것

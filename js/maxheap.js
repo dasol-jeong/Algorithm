@@ -57,7 +57,24 @@ maxH.insert(4);
 maxH.insert(9);
 // console.log(maxH.get());
 // console.log(maxH.get());
-// console.log(maxH.get());
-// console.log(maxH.get());
+// cle.log(maxH.get());
 // console.log(maxH.get());
 console.log(maxH);
+
+function solution(nums, k) {
+  let answer = [];
+  let nH = new Map();
+  for (let x of nums) {
+    nH.set(x, (nH.get(x) || 0) + 1);
+  }
+  let tmp = [...nH].sort((a, b) => b[1] - a[1]); //해시 정렬
+  console.log(tmp);
+  for (let i = 0; i < k; i++) {
+    answer.push(tmp[i][0]);
+  }
+  onsole.log(maxH.get());
+  // conso
+  return -1;
+}
+console.log(solution([1, 1, 1, 2, 2, 3], 2));
+console.log(solution([3, 3, 3, 5, 1, 1, 1, 7, 2, 2], 3));

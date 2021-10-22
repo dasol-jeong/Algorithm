@@ -132,51 +132,50 @@ sum+=right-left+1;
 return counting(k)-counting(k-1);
 */
 
-function solution(n){
-  let answer=0,temp=[];
+function solution(n) {
+  let answer = 0,
+    temp = [];
 
-  function DFS(n){
-    if(n===0) return;
-    else{
-      DFS(parseInt(n/2));
-      temp.push(n%2);
+  function DFS(n) {
+    if (n === 0) return;
+    else {
+      DFS(parseInt(n / 2));
+      temp.push(n % 2);
     }
   }
   DFS(n);
-  for(let i=0;i<temp.length;i++){
-    answer=answer*10+temp[i];
+  for (let i = 0; i < temp.length; i++) {
+    answer = answer * 10 + temp[i];
   }
   return answer;
 }
 console.log(solution(11));
 
-
-
-function solution(n){
+function solution(n) {
   let answer;
-  let dy=Array.from(Array(n))
+  let dy = Array.from(Array(n));
 }
 
 console.log(solution([2, 2, 0, 2, 1, 1]));
 
-function solution(num){
-  let anwer=0;
-  let n=num.length;
-  function BFS(){
-    let ch=Array.from({length:n},()=>0);
-    let queue=[];
+function solution(num) {
+  let anwer = 0;
+  let n = num.length;
+  function BFS() {
+    let ch = Array.from({ length: n }, () => 0);
+    let queue = [];
     queue.push(0);
-    ch[0]=1;
-    let l=0;
-    while(queue.length){
-      let len=queue.length;
-      for(let i=0;i<len;i++){
-        let x=queue.shift();
-        for(let j=1;j<=num[x];j++){
-          let nx=x+j;
-          if(nx===n-1) return l+1;
-          if(nx>0&&nx<n&&ch[nx]===0){
-            ch[nx]=1;
+    ch[0] = 1;
+    let l = 0;
+    while (queue.length) {
+      let len = queue.length;
+      for (let i = 0; i < len; i++) {
+        let x = queue.shift();
+        for (let j = 1; j <= num[x]; j++) {
+          let nx = x + j;
+          if (nx === n - 1) return l + 1;
+          if (nx > 0 && nx < n && ch[nx] === 0) {
+            ch[nx] = 1;
             queue.push(nx);
           }
         }
@@ -184,35 +183,31 @@ function solution(num){
       l++;
     }
   }
-  answer=BFS();
-  if(answer===undefined) answer=-1;
+  answer = BFS();
+  if (answer === undefined) answer = -1;
   return answer;
 }
-console.log(solution([2,2,0,2,1,1]))
+console.log(solution([2, 2, 0, 2, 1, 1]));
 
-
-function solution(board){
+function solution(board) {
   let answer;
-  let n=board.length;
-  let dis=Araay.from(Array(7),()=>Array(7).fill(0));
-  let dx=[-1,0,1,0];
-  let dy=[0,1,0,-1];
-  function BFS(x,y){
-    let queue=[];
-    queue.push([x,y]);
-    board[x][y]=1;
-    while(queue.length){
-      let curr=queue.shift();
-      for(let j=0;j<4;j++){
-        let nx=curr[0]
+  let n = board.length;
+  let dis = Araay.from(Array(7), () => Array(7).fill(0));
+  let dx = [-1, 0, 1, 0];
+  let dy = [0, 1, 0, -1];
+  function BFS(x, y) {
+    let queue = [];
+    queue.push([x, y]);
+    board[x][y] = 1;
+    while (queue.length) {
+      let curr = queue.shift();
+      for (let j = 0; j < 4; j++) {
+        let nx = curr[0];
       }
     }
   }
-
 }
 console.log(solution());
-
-
 
 function solution2(nums, m) {
   let answer = 0;
@@ -252,80 +247,114 @@ function solution(nums, m) {
     } else {
       //조건이 2명이하 이니까 nums[left], 즉 여기선 nums[0] 값으로만 원하는 값을 찾을 수 있음
       answer++; // 한개 counting!
-      left++;  
+      left++;
     }
   }
   return answer;
 }
 console.log(solution([90, 50, 70, 70, 100, 50], 140));
-function solution(n,m){
-  let answer;
-  let temp=Array.from({Array(n)});
-  let ch=Array.from({length:n},()=>0);
-
-  function DFS(l,)
-  return answer;
-}
-console.log(solution(3,2));
-
-
 
 // 문자열
-function solution(s){
-  let answer=0;
-  let temp=[];
- 
-  for(let i=0;i<s.length-2;i++){
-    temp.push(s.substring(i,i+3));
+function solution(s) {
+  let answer = 0;
+  let temp = [];
+
+  for (let i = 0; i < s.length - 2; i++) {
+    temp.push(s.substring(i, i + 3));
   }
-  for(let i=0;i<temp.length;i++){
-    let sH=new Map();
-    for(let x of temp[i]){
-      sH.set(x,(sH.get(x)||0)+1);
+  for (let i = 0; i < temp.length; i++) {
+    let sH = new Map();
+    for (let x of temp[i]) {
+      sH.set(x, (sH.get(x) || 0) + 1);
     }
-    if(sH.size===3) answer++;
+    if (sH.size === 3) answer++;
   }
   console.log(temp);
   return answer;
 }
 console.log(solution("xyzzaz"));
 
-
-
-function solution(m,nums){
+function solution(m, nums) {
   let answer;
-  let left=0,right=Math.max(...nums);
+  let left = 0,
+    right = Math.max(...nums);
 
-  function count(len){
-    let sum=0;
-    for(let x of nums){
-      if(x>len){
-        sum+=x-len;
+  function count(len) {
+    let sum = 0;
+    for (let x of nums) {
+      if (x > len) {
+        sum += x - len;
       }
     }
     return sum;
   }
 
-  while(left<=right){
-    let mid=parseInt((left+right)/2);
-    if(count(mid)>=m){
-      answer=mid;
-      left=mid+1;
-    }
-    else right=mid-1;
-
+  while (left <= right) {
+    let mid = parseInt((left + right) / 2);
+    if (count(mid) >= m) {
+      answer = mid;
+      left = mid + 1;
+    } else right = mid - 1;
   }
   return answer;
 }
-console.log(solution(7,[20, 15, 10, 17]));
-console.log(solution(20,[4,42,40,26,46]));
+console.log(solution(7, [20, 15, 10, 17]));
+console.log(solution(20, [4, 42, 40, 26, 46]));
 
 // for문 3개 사용 이중 for문
-function solution(nums){
+function solution(nums) {
   let answer;
-  let n=nums.length;
-  let dy=Array(n+1).fill(0);
+  let n = nums.length;
+  let dy = Array(n + 1).fill(0);
   return answer;
-
 }
-console.log(solution([1,5,2,1,4,3,4,5,2,1]));
+console.log(solution([1, 5, 2, 1, 4, 3, 4, 5, 2, 1]));
+
+function solution(str) {
+  let stack = [];
+
+  for (let x of str) {
+    let tmp = "";
+    if (x !== ")") stack.push(x);
+    else {
+      while (stack[stack.length - 1] !== "(") {
+        let s = stack.pop();
+        tmp = s + tmp;
+      }
+      stack.pop();
+      let num = "";
+      while (stack.length && !isNaN(stack[stack.length - 1])) {
+        let numtemp = stack.pop();
+        num = numtemp + num;
+      }
+      stack.push(tmp.repeat(Number(num)));
+    }
+  }
+  return stack;
+}
+console.log(solution("3(a)2(bc)"));
+console.log(solution("2(abc)3(cd)ef"));
+
+function solution(str) {
+  let stack = [];
+
+  for (let x of str) {
+    let tmp = "";
+    if (x !== ")") stack.push(x);
+    else {
+      while (stack[stack.length - 1 !== "("]) {
+        let s = stack.pop();
+        tmp = s + tmp;
+      }
+      stack.pop();
+      let num = "";
+      while (!isNaN(stack[stack.length - 1])) {
+        let numtemp = stack.pop();
+        num = numtemp + num;
+      }
+      stack.push(tmp.repeat(Number(num)));
+    }
+  }
+  return stack[0];
+}
+console.log(solution("3(a)2(bc)"));
