@@ -156,3 +156,82 @@ function solution(s) {
   return answer;
 }
 console.log(solution("()(()()"));
+
+// 5번(조장님)
+function solution(nums) {
+  let answer = 0;
+  const N = nums.length;
+  let dy = Array(N);
+  for (let i = 0; i < N; i++) {
+    dy[i] = Array(N).fill(1);
+  }
+
+  for (let i = 0; i < N; i++) {
+    dy[i][i] = 1;
+    for (let j = i + 1; j < N; j++) {
+      for (let k = i - 1; k >= 0; k--) {
+        if (nums[j] - nums[i] === nums[i] - nums[k]) {
+          dy[i][j] += dy[k][i];
+          answer = Math.max(answer, dy[i][j]);
+        }
+      }
+    }
+  }
+
+  return answer + 1;
+}
+
+function getCnt(s) {
+  let stack = [];
+  for (const x of s) {
+    if (x === "(") {
+      stack.push("(");
+    } else {
+      if (stack[stack.length - 1] === "(") stack.pop();
+      else stack.push(")");
+    }
+  }
+  return stack.length;
+}
+
+// 4번(조장님)
+function solution(s) {
+  let answer = 0;
+  const N = s.length;
+
+  let arr = [];
+  let set = new Set();
+  let m = getCnt(s);
+  m = Math.min(m, N - m);
+
+  function dfs(L, start) {
+    if (L === m) {
+      let ch = Array(N).fill(0);
+      for (const x of arr) {
+        ch[x] = 1;
+      }
+
+      let tmp = "";
+      for (let i = 0; i < N; i++) {
+        if (ch[i]) continue;
+        tmp += s[i];
+      }
+
+      if (getCnt(tmp) === 0 && tmp !== "") {
+        set.add(tmp);
+      }
+    } else {
+      for (let i = start; i < N; i++) {
+        arr.push(i);
+        dfs(L + 1, i + 1);
+        arr.pop();
+      }
+    }
+  }
+  dfs(0, 0);
+
+  answer = set.size;
+  return answer;
+}
+
+console.log(solution("())(()()"));
