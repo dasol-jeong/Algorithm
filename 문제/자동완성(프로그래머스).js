@@ -1,25 +1,28 @@
-// trie : 문자열을 탐색할떄 유용한 자료구조 / 각 노드에서 자식들에 대한 포인터들을 배열로 저장함
-
 class Node {
   constructor() {
     this.end = false;
+    this.cnt = 0;
     this.child = {};
   }
 }
+
 class Trie {
   constructor() {
     this.root = new Node();
   }
+
   insert(word) {
-    let cur = tihs.root;
+    let cur = this.root;
     for (let x of word) {
       if (cur.child[x] === undefined) {
         cur.child[x] = new Node();
       }
-      cur = cur.child[x]; //문자 있으면 cur위치만 옮겨주면돼
+      cur = cur.child[x];
+      cur.cnt++;
     }
-    cur.end = true; //이 node가 이 단어의 끝이다라는 의미
+    cur.end = true;
   }
+
   search(word) {
     let cur = this.root;
     for (let x of word) {
@@ -28,6 +31,7 @@ class Trie {
     }
     return cur.end;
   }
+
   prefixS(str) {
     let cur = this.root;
     for (let x of str) {
@@ -36,8 +40,27 @@ class Trie {
     }
     return true;
   }
+  getCount(word) {
+    let cur = this.root;
+    let Count = 0;
+    for (let x of word) {
+      Count++;
+      cur = cur.child[x];
+      if (cur.cnt === 1) return Count;
+    }
+    return Count;
+  }
 }
-const mT = new Trie();
-mT.insert("hello");
-mT.insert("student");
-console.log(mT.search("st"));
+function solution(words) {
+  let answer = 0;
+  let mT = new Trie();
+  for (let word of words) {
+    mT.insert(word);
+  }
+  for (let word of words) {
+    answer += mT.getCount(word);
+  }
+  return answer;
+}
+
+console.log(solution(["go", "gone", "guild"]));
