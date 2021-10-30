@@ -9,7 +9,7 @@
 // 문제: 노드 300개 이하이면 써도돼
 // 노드 300개 넘어가면 다익스트라 사용해
 // 경로가 없으면 초기화 상태인 무한대인 상태
-모든정점으로 가는 최소비용을 구해줌
+// 모든정점으로 가는 최소비용을 구해줌
 
 function solution(n, edges) {
   let answer = 0;
@@ -66,34 +66,55 @@ function solution(n, edges) {
 }
 console.log(solution(5, [[1, 2], [2, 3], [3, 4], [4, 5], [2, 4], [5, 3]]));
 
-
 //키순서
 function solution(n, edges) {
   let answer = 0;
   let dy = Array.from(Array(n + 1), () => Array(n + 1).fill(1e9));
   let cnt = Array(n + 1).fill(0);
   for (let [a, b] of edges) {
-    dy[a][b]=1;
+    dy[a][b] = 1;
   }
   for (let k = 1; k <= n; k++) {
     for (let i = 1; i <= n; i++) {
       for (let j = 1; j <= n; j++) {
         if (dy[i][j] > dy[i][k] + dy[k][j]) {
-          dy[i][j] = dy[i][k]+dy[k][j];
+          dy[i][j] = dy[i][k] + dy[k][j];
         }
       }
     }
   }
-  for(let i=1;i<=n;i++){
-    for(let j=1;j<=n;j++){
-      if(dy[i][j]!==1e9)
-      cnt[i]++;
+  for (let i = 1; i <= n; i++) {
+    for (let j = 1; j <= n; j++) {
+      if (dy[i][j] !== 1e9) cnt[i]++;
       cnt[j]++;
     }
   }
-  for(let i=1;i<=n;i++){
-    if(cnt[i]===n-1) answer++;
+  for (let i = 1; i <= n; i++) {
+    if (cnt[i] === n - 1) answer++;
   }
   return answer;
 }
 console.log(solution(6, [[1, 5], [3, 4], [5, 4], [4, 2], [4, 6], [5, 2]]));
+
+function solution(n, results) {
+  var answer = 0;
+  let dy = Array.from(Array(n + 1), () => Array(n + 1).fill(false));
+  results.forEach(([a, b]) => (dy[a][b] = true));
+  console.log(dy);
+  for (let k = 1; k <= n; k++) {
+    for (let i = 1; i <= n; i++) {
+      for (let j = 1; j <= n; j++) {
+        if (dy[i][k] && dy[k][j]) dy[i][j] = true;
+      }
+    }
+  }
+  for (let i = 1; i <= n; i++) {
+    let cnt = 0;
+    for (let j = 1; j <= n; j++) {
+      if (dy[i][j] || dy[j][i]) cnt++;
+    }
+    if (cnt === n - 1) answer++;
+  }
+  return answer;
+}
+console.log(solution(5, [[4, 3], [4, 2], [3, 2], [1, 2], [2, 5]]));
