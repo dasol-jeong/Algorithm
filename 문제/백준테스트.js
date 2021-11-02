@@ -88,32 +88,86 @@ for (let i = 1; i < input.length; i++) {
   meetingTime.push(input[i].trim().split(" ").map(Number));
 }
 
-// 주몽
+// // 주몽
+// const fs = require("fs");
+// const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
+// let input = fs.readFileSync(filePath).toString().trim().split("\n");
+// let n = Number(input[0].trim());
+// let m = Number(input[1].trim());
+// let tmp = input[2].split(" ").map(Number);
+// let nums = Array(n);
+// for (let i = 0; i < n; i++) {
+//   nums[i] = parseInt(tmp[i]);
+// }
+// function solution(n, m, nums) {
+//   let answer = 0;
+//   let sum = 0,
+//     left = 0,
+//     right = n - 1;
+//   nums.sort((a, b) => a - b);
+//   while (left < right) {
+//     sum = nums[left] + nums[right];
+//     if (sum === m) {
+//       answer++;
+//       left++;
+//       right--;
+//     } else if (sum > m) right--;
+//     else left++;
+//   }
+//   return answer;
+// }
+// console.log(solution(n, m, nums));
+
+// 부분합
 const fs = require("fs");
 const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
 let input = fs.readFileSync(filePath).toString().trim().split("\n");
-let n = Number(input[0].trim());
-let m = Number(input[1].trim());
-let tmp = input[2].split(" ").map(Number);
+let n = Number(input[0].trim().split(" ")[0]);
+let s = Number(input[0].trim().split(" ")[1]);
+let tmp = input[1].split(" ");
 let nums = Array(n);
+
 for (let i = 0; i < n; i++) {
-  nums[i] = parseInt(tmp[i]);
+  nums[i] = Number(tmp[i]);
 }
-function solution(n, m, nums) {
+
+function solution(n, target, nums) {
+  let answer = Infinity; // 최소길이를 구하는 것이니 Math.min으로 값을 비교하며 값을 갱신해줄것임. 먼저 answer에 큰 값을 넣는다.
+  let left = 0,
+    sum = 0;
+  for (let right = 0; right < n; right++) {
+    // 배열의 크기만큼 다 탐색
+    sum += nums[right]; // 배열의 인덱스 0부터 더해나간다.
+    while (sum >= target) {
+      // 배열의 합이 조건의 수보다 크거나 같으면
+      answer = Math.min(answer, right - left + 1); // 그 배열의 길이를 더 작은 값으로 갱신해준다.
+      sum -= nums[left++]; // 그리고 left를 움직이며, 현재의 합이 조건의 수보다 작을때까지 left를 움직이며 인덱스 left 값을 빼준다.
+    }
+  }
+  return answer === Infinity ? 0 : answer; //만약 배열에서 그 조건의 수를 만드는 연속된 수열이 없다면 0을 return해주고, 있다면 answer의 값을 return 한다.
+}
+console.log(solution(n, s, nums));
+
+//랜선자르기
+const fs = require("fs");
+const filePath = process.platform === "linux" ? "/dev/stdin" : "./input.txt";
+let input = fs.readFileSync(filePath).toString().trim().split("\n");
+let n = Number(input[0].trim().split(" ")[0]);
+let s = Number(input[0].trim().split(" ")[1]);
+let nums = [];
+for (let i = 1; i <= n; i++) {
+  nums.push(input[i].trim());
+}
+function solution(n, target, nums) {
   let answer = 0;
-  let sum = 0,
-    left = 0,
-    right = n - 1;
+  let left = 0,
+    right = 1e9;
   nums.sort((a, b) => a - b);
   while (left < right) {
-    sum = nums[left] + nums[right];
-    if (sum === m) {
-      answer++;
-      left++;
-      right--;
-    } else if (sum > m) right--;
-    else left++;
+    let mid = (left + right) / 2;
+    if (mid >= target) {
+      answer = mid;
+    }
   }
-  return answer;
 }
-console.log(solution(n, m, nums));
+console.log(solution(n, s, nums));
