@@ -1,4 +1,4 @@
-var nthSuperUglyNumber = function(n, primes) {
+function solution(n, primes) {
   const dy = Array(n + 1).fill(1);
   const coef = Array(primes.length).fill(1);
   for (let i = 2; i <= n; i++) {
@@ -14,6 +14,6 @@ var nthSuperUglyNumber = function(n, primes) {
     dy[i] = minValue;
   }
   return dy[n];
-};
+}
 
-console.log(nthSuperUglyNumber(12, [2, 7, 13, 19]));
+console.log(solution(12, [2, 7, 13, 19]));
